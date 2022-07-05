@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="#"
+                               onclick="showAddForm()">Add</a>
+                        </li>
+
+                        <li class="nav-item active">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModal2" href="#"
+                               onclick="showRegister()">Register</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" data-toggle="modal" data-target="#exampleModal3" href="#"
+                               onclick="showFormLogin()">Login</a>
+                        </li>
+                    </ul>
+                    <div class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                               id="search-name">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="search()">Search
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div id="content"></div>
+    <div class="row mt3">
+        <div class="col-12">
+            <table class="table table-striped table-dark">
+                <thead>
+                <h1 style="text-align: center">List Product</h1>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Category</th>
+                </tr>
+                </thead>
+                <tbody id="list">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <label>Name :</label>
+                    <input type="text" name="name" class="form-control" id="pro-name"><br>
+                    <label>Price :</label>
+                    <input type="text" name="price" class="form-control" id="pro-price">
+                    <br>
+                    <select name="category" class="form-control" id="pro-cate">
+                        <option value="1">Vip</option>
+                        <option value="2">Pro</option>
+                    </select>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save()">Add Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal12" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" id="id">
+                    <label>Name :</label>
+                    <input type="text" name="name" class="form-control" id="p-name"><br>
+                    <label>Price :</label>
+                    <input type="text" name="price" class="form-control" id="p-price">
+                    <br>
+                    <select name="category" class="form-control" id="pro-category">
+                        <option value="1">Vip</option>
+                        <option value="2">Pro</option>
+                    </select>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Update()">Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <label>UserName : </label>
+                    <input type="text" name="username" id="username" class="form-control"><br>
+                    <label>Password : </label>
+                    <input type="text" name="password" id="password" class="form-control"><br>
+                    <label>ConfirmPassword : </label>
+                    <input type="text" name="confirmPassword" id="confirmPassword" class="form-control"><br>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveUser()">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">Login</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="login">
+                    <label>Username: </label>
+                    <input type="text" name="usernameLogin" id="usernameLogin" class="form-control">
+                    <label>Password: </label>
+                    <input type="password" name="passwordLogin" id="passwordLogin" class="form-control">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="loginUser()">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let token = "";
+
+    let tbody = document.getElementById("list");
+    let searchName = document.getElementById("search-name");
+    let categoryList = document.getElementById("cate");
+    let addForm = document.getElementById("addForm");
+    let editForm = document.getElementById("editForm");
+    let login = document.getElementById('login')
+
+
+    function loadData() {
+
+        $.ajax({
+            type: "GET",
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            url: "http://localhost:8080/products",
+            success: function (data) {
+                console.log(data)
+                loadTableProduct(data)
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+
+    function loadTableProduct(data) {
+        let str = ""
+        console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            str += `<tr>
+                        <th scope="row">${i + 1}</th>
+                        <td>${data[i].name}</td>
+                        <td>${data[i].price}</td>
+                        <td>${data[i].category.name}</td>
+                        <td><button  class="btn btn-primary" onclick="showEdit(${data[i].id})"> Edit</button></td>
+                        <td><button  class="btn btn-danger" onclick="deleteProduct(${data[i].id})">Delete</button></td>
+
+                    </tr>`
+
+        }
+        tbody.innerHTML = str;
+    }
+
+    function search() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/products/search-by-name?name=" + searchName.value,
+            success: function (data) {
+                loadTableProduct(data.content);
+            }
+        })
+    }
+
+    function findAllCategory() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/categorys",
+            success: function (data) {
+                let str = "<h2>List Category</h2>"
+                for (let i = 0; i < data.length; i++) {
+                    str += `<h4>${data[i].name}</h4> `
+                }
+                categoryList.innerHTML = str;
+            }
+        })
+    }
+
+    function showRegister() {
+        $('#exampleModal2').modal('show');
+    }
+
+    function showAddForm() {
+        $('#exampleModal').modal('show');
+
+    }
+
+    function saveUser() {
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
+        let user = {
+            username: username,
+            password: password,
+            confirmPassword: confirmPassword,
+        }
+
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            type: "POST",
+            url: "http://localhost:8080/register",
+            data: JSON.stringify(user),
+            success: function () {
+                $('#registerModal2').modal('hide');
+                showFormLogin()
+            },
+
+        })
+    }
+
+    function showFormLogin() {
+        $('#exampleModal3').modal('show');
+    }
+
+    function loginUser() {
+        let usernameLogin = document.getElementById('usernameLogin').value;
+        let passwordLogin = document.getElementById('passwordLogin').value;
+        let user = {
+            username: usernameLogin,
+            password: passwordLogin
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            type: "POST",
+            url: "http://localhost:8080/login",
+            data: JSON.stringify(user),
+            success: function (data) {
+                localStorage.setItem('token', data.accessToken);
+                console.log(data)
+
+                $('#exampleModal3').modal('hide');
+                login.reset()
+                currentUser()
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+
+    function currentUser() {
+        document.getElementById("content").innerHTML = `<button onclick="roleUser()">User</button><button onclick="loadData()">show</button>`
+
+    }
+
+    function roleUser() {
+        $.ajax({
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            type: "GET",
+            url: "http://localhost:8080/users",
+            success: function (data) {
+                console.log(data)
+                writeUser(data)
+                loadData()
+            },
+            error: function (error) {
+                document.getElementById("content").innerHTML = `<h4>Bạn không có quyền ở đây<\h4>`
+                console.log(error)
+            }
+        })
+    }
+
+    function writeUser(data) {
+        let str = ""
+        for (let i = 0; i < data.length; i++) {
+            str += `<h4>Id : ${data[i].id}, ${data[i].username} - Tôi là User<\h4> `
+        }
+        document.getElementById("content").innerHTML = str
+    }
+
+    function save() {
+        let name = document.getElementById('pro-name').value;
+        let price = document.getElementById('pro-price').value;
+        let category = document.getElementById('pro-cate').value;
+
+        let product = {
+            name: name,
+            price: price,
+            category: {
+                id: category,
+            }
+        }
+        // console.log(product)
+        // console.log(localStorage.getItem('token'))
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            type: "POST",
+            url: "http://localhost:8080/users/products",
+            data: JSON.stringify(product),
+            success: function () {
+                $('#exampleModal').modal('hide');
+                addForm.reset();
+                loadData()
+
+            },
+            errors: function (error) {
+                console.log(error)
+            }
+        })
+    }
+
+    function showEdit(id) {
+        $('#exampleModal12').modal('show');
+        $.ajax({
+            headers: {
+
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            type: "GET",
+            url: "http://localhost:8080/products/" + id,
+            success: function (data) {
+                console.log(data);
+                document.getElementById('id').value = data.id;
+                document.getElementById('p-name').value = data.name;
+                document.getElementById('p-price').value = data.price;
+                document.getElementById('pro-category').value = data.category;
+            }
+        })
+    }
+
+    function Update() {
+        let id = document.getElementById('id').value;
+        let name = document.getElementById('p-name').value;
+        let price = document.getElementById('p-price').value;
+        let category = document.getElementById('pro-category').value;
+        let product = {
+            name: name,
+            price: price,
+            category: {
+                id: category,
+            }
+        }
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+
+            },
+            type: "PUT",
+            url: "http://localhost:8080/users/products/" + id,
+            data: JSON.stringify(product),
+            success: function () {
+                loadData();
+                $('#exampleModal12').modal('hide');
+
+            },
+            errors: function (error) {
+                console.log(error)
+            }
+        })
+    }
+
+    function deleteProduct(id) {
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            type: "DELETE",
+            url: "http://localhost:8080/products/" + id,
+            success: function () {
+                alert("Xóa Thành Công")
+                loadData()
+            },
+            errors: function () {
+                console.log()
+            }
+        })
+    }
+
+    // function showEdit(id) {
+    //     $('#exampleModal1').modal('show')
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/home/" + id,
+    //         success: function (data) {
+    //             console.log(data)
+    //             document.getElementById('id1').value = data.id;
+    //             document.getElementById('name1').value = data.name;
+    //             document.getElementById('address1').value = data.address;
+    //             document.getElementById('bedroomQuantity1').value = data.bedroomQuantity;
+    //             document.getElementById('bathroomQuantity1').value = data.bathroomQuantity;
+    //             document.getElementById("oldFile").innerHTML = `<img src="image/${data.image}" style="max-width: 150px;
+    //                                                                        height: 150px">`;
+    //             document.getElementById('price1').value = data.price;
+    //         }, error: function (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    //
+    // }
+</script>
+</body>
+</html>
